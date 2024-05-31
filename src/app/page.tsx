@@ -26,7 +26,7 @@ type Source = {
 export default async function Home(): Promise<JSX.Element> {
   const fetchJSONData = async (): Promise<Articles[] | null> => {
     try{
-      const response = await fetch(`https://newsapi.org/v2/top-headlines?country=th&apiKey=${process.env.API_KEY}`, { next: { revalidate: 86400 }});
+      const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${process.env.API_KEY}`, { next: { revalidate: 86400 }});
       const data: News = await response.json();
       return data.articles;
     }catch(error){
@@ -39,7 +39,7 @@ export default async function Home(): Promise<JSX.Element> {
       {(news) && news.map((data: Articles, index: number) => {
         return (
           <div key={index} className={"bg-slate-50"}>
-            <Image draggable={false} className="w-full rounded-t" src={data.urlToImage ? data.urlToImage: "https://placehold.co/512x256/png"} width={512} height={256} alt={data.title ? data.title : ""} title={data.title ? data.title : "ไม่ปรากฏ"}/>
+            <Image draggable={false} className="w-full object-cover rounded-t" src={data.urlToImage ? data.urlToImage: "https://placehold.co/512x256/png"} width={512} height={256} alt={data.title ? data.title : ""} title={data.title ? data.title : "ไม่ปรากฏ"}/>
             <div className="p-3">
             <Link href={data.url ? data.url : "/"} target={"_blank"}>
             <h3 className="truncate text-lg w-full max-w-96 hover:text-blue-700" title={data.title ? data.title : "ไม่ปรากฏ"}>{data.title ? data.title : "ไม่ปรากฏ"}</h3>
